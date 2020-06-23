@@ -1,0 +1,55 @@
+static int makeAnagram(string a, string b) {
+
+        int numDel = 0; 
+
+        Dictionary<char, int> a_charDict = new Dictionary<char, int>();
+        Dictionary<char, int> b_charDict = new Dictionary<char, int>();
+
+        int index_a = 0;
+        int index_b = 0;
+
+        // Place all characters into dictionaries
+
+        while (index_a < a.Length || index_b < b.Length){
+            if (index_a < a.Length){
+                if(a_charDict.ContainsKey(a[index_a])){
+                    a_charDict[a[index_a]]++;
+                }
+                else{
+                    a_charDict.Add(a[index_a],1);
+                }
+                index_a++;
+            }
+            if(index_b < b.Length){
+                if(b_charDict.ContainsKey(b[index_b])){
+                    b_charDict[b[index_b]]++;
+                }
+                else{
+                    b_charDict.Add(b[index_b], 1);
+                }
+                index_b++;
+            }
+        }
+
+        foreach(var char_a in a_charDict){
+            if (b_charDict.ContainsKey(char_a.Key)){
+                if(char_a.Value != b_charDict[char_a.Key]){
+                    numDel += Math.Abs(char_a.Value - b_charDict[char_a.Key]);
+                }
+            }
+            else{
+                numDel += char_a.Value;
+            }
+        }
+
+        foreach(var char_b in b_charDict){
+            if (a_charDict.ContainsKey(char_b.Key) == false){
+                numDel += char_b.Value; 
+            }
+        }
+
+        return numDel; 
+
+
+
+    }
