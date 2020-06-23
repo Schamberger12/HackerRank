@@ -1,0 +1,59 @@
+
+// Programming Language: C#
+static string isValid(string s) {
+
+        int numFreq = 0;
+        int numFreq2 = 0; 
+        
+        bool foundDiff = false; 
+        bool twoAgree = false; 
+
+        Dictionary<char, int> charFreq = new Dictionary<char, int>();
+
+        foreach(char c in s){
+            if(charFreq.ContainsKey(c)){
+                charFreq[c]++; 
+            }
+            else{
+                charFreq.Add(c, 1); 
+            }
+        }
+
+        foreach(var c in charFreq){
+            Console.WriteLine("{0} {1}", c.Key, c.Value); 
+            if(numFreq==0){
+                numFreq = c.Value; 
+            }
+            else{
+                if (Math.Abs(c.Value - numFreq) >= 2){
+                    if(c.Value == 1){
+                        if(foundDiff){
+                            return "NO";
+                        }
+                        else{
+                            foundDiff = true; 
+                        }
+                    }
+                    else{
+                        return "NO";
+                    }
+                }
+                else if(c.Value > numFreq){
+                    if(foundDiff){
+                        return "NO"; 
+                    }
+                    foundDiff = true; 
+                }
+                else if(numFreq > c.Value){
+                    Console.WriteLine("Found difference"); 
+                    if(foundDiff){
+                        return "NO";
+                    }
+                    foundDiff = true; 
+                }
+            }
+        }
+
+        return "YES"; 
+
+    }
